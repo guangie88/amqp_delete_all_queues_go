@@ -23,7 +23,7 @@ func main() {
 	for _, q := range qs {
 		resp, err := rmqc.DeleteQueue(q.Vhost, q.Name)
 
-		if err == nil && resp.StatusCode == http.StatusOK {
+		if err == nil && (resp.StatusCode == http.StatusOK || resp.StatusCode == http.StatusNoContent) {
 			log.Printf("Queue '%s' in '%s' was deleted!", q.Name, q.Vhost)
 		} else {
 			if err == nil {
@@ -33,4 +33,6 @@ func main() {
 			}
 		}
 	}
+
+	log.Print("Program completed!")
 }
